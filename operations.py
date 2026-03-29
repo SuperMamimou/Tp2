@@ -13,10 +13,10 @@ class Addition(Expression):
     def deriver(self) -> Expression:
         deriver_exp1: Expression = self.exp1.deriver()
         deriver_exp2: Expression = self.exp2.deriver()
-        return Addition_de_Polynome(deriver_exp1.expression, deriver_exp2.expression)
+        return Addition_de_Polynome(deriver_exp1, deriver_exp2)
     
     def __str__(self):
-        return f"{list(self.exp1.expression)} + {list(self.exp2.expression)}"
+        return f"{self.exp1} + {self.exp2}"
 
 
 class Multiplication(Expression):
@@ -31,18 +31,9 @@ class Multiplication(Expression):
     def deriver(self) -> Expression:
         deriver_exp1: Expression = self.exp1.deriver()
         deriver_exp2: Expression = self.exp2.deriver()
-        return Addition_de_Polynome(
-                Multiplication_de_Polynome(deriver_exp1, self.exp2),
-                Multiplication_de_Polynome(deriver_exp2, self.exp1)
-            )
-        
-
-
+        return Addition(
+            Multiplication(deriver_exp1, self.exp2),
+            Multiplication(self.exp1, deriver_exp2)
+        )
     def __str__(self):
-        return f"{list(self.exp1.expression)} * {list(self.exp2.expression)}"
-    
-
-exp1 = Polynome([2,1,3])
-exp2 = Polynome([1,6,1,9])
-
-print(Multiplication(exp1, exp2).deriver())
+        return f"{self.exp1} * {self.exp2}"
