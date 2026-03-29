@@ -23,3 +23,25 @@ class Polynome(Expression):
     def __str__(self) -> str:
         return f"{list(self.expression)}"
     
+
+def Addition_de_Polynome(exp1: Polynome, exp2: Polynome) -> Polynome:
+    """Prend comme argument deux Polynomes et retourne l'addtion des deux Polynomes"""
+    if len(exp1.expression) >= len(exp2.expression):
+        for i in range(0, len(exp2.expression), 1):
+            exp1.expression[i] = exp1.expression[i] + exp2.expression[i]
+        return Polynome(exp1.expression)
+    else:
+        for i in range(0, len(exp1.expression), 1):
+            exp2.expression[i] = exp1.expression[i] + exp2.expression[i]
+        return Polynome(exp2.expression)
+    
+def Multiplication_de_Polynome(exp1:Polynome, exp2:Polynome) -> Polynome:
+    """Prend comme argument deux Polynomes et retourne la multiplication des deux Polynomes"""
+    Mult = []
+    for i in range(0, len(exp1.expression)+len(exp2.expression)-1, 1):
+        Mult.append(0)
+    
+    for i in range(0, len(exp1.expression), 1):
+        for j in range(0, len(exp2.expression), 1):
+            Mult[j+i] = exp1.expression[i] * exp2.expression[j] + Mult[j+i]
+    return Polynome(Mult)
